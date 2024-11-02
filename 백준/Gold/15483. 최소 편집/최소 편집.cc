@@ -2,13 +2,11 @@
 #include <vector>
 using namespace std;
 
-
-
 vector <vector<int>> dp;
 string s, t;
 int n, m;
 
-int func(const int& i, const int& j) {
+int func(int i, int j) {
 
 	if (i >= n) {
 		return m - j;
@@ -26,19 +24,16 @@ int func(const int& i, const int& j) {
 	}
 	else {
 
-		//�߰�
-		if (ret > 1 + func(i , j +1)) {
-			ret = 1 + func(i, j + 1);
-		}
+		//추가
+		ret = min(ret, 1 + func(i, j + 1));
+	
 
-		//����
-		if (ret > 1 + func(i + 1, j + 1)) {
-			ret = 1 + func(i + 1, j + 1);
-		}
-		//����
-		if (ret > 1 + func(i + 1, j )) {
-			ret = 1 + func(i + 1, j);
-		}
+		//변경
+		ret = min(ret,1+ func(i+1 , j + 1));
+
+		//삭제
+		ret = min(ret, 1+func(i + 1, j));
+
 	}
 
 	return ret;
@@ -51,7 +46,8 @@ signed main() {
 	cout.tie(nullptr);
 
 	int tc;
-	tc=1;
+	tc = 1;
+	//cin >> tc;
 	while (tc--) {
 		cin >> s >> t;
 		if (s == t) {
