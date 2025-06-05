@@ -15,6 +15,10 @@ signed main() {
 
 	int n;
 	cin >> n;
+	if(n == 1){
+		cout << 0;
+		return 0;
+	}
 	vector<ll> x(n);
 	for(int i = 0; i < n; i++) cin >> x[i];
 
@@ -26,15 +30,15 @@ signed main() {
 	}*/
 
 
-	ll ans;
-	ll lo = 1; ll hi = 1e18;
+	ll ans = 1e18;
+	ll lo = 1; ll hi = 1e9;
 	while(lo <= hi){
 		ll mid = (lo + hi) / 2;
 
 		ll sum1 = 0, sum2 = 0;
 
 		bool of = 0;
-		for(int i = 0; i < n; i++){
+		for(ll i = 0; i < n; i++){
 			sum1 += abs(x[i] - mid * i);
 			sum2 += abs(x[i] - (mid+1) * i);
 			if(sum1 < 0 || sum2 < 0) of = 1;
@@ -42,10 +46,11 @@ signed main() {
 
 		if(of){
 			hi = mid - 1;
+			continue;
 		}
 
-		if(sum1 <= sum2){
-			ans = sum1;
+		if(sum1 < sum2){
+			ans = min(ans, sum1);
 			hi = mid - 1;
 		}
 		else{
